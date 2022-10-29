@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="github.haoqi123.boot.model.TableMultipartColumnsMapper">
+    <resultMap id="BaseResultMap" type="github.haoqi123.boot.entity.TableMultipartColumns">
+        <!--@mbg.generated-->
+        <!--@Table qjwy_db01.table_multipart_columns-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name1" jdbcType="VARCHAR" property="name1"/>
+        <result column="name2" jdbcType="VARCHAR" property="name2"/>
+        <result column="name3" jdbcType="VARCHAR" property="name3"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        name1,
+        name2,
+        name3
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from qjwy_db01.table_multipart_columns
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from qjwy_db01.table_multipart_columns
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="github.haoqi123.boot.entity.TableMultipartColumns"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into qjwy_db01.table_multipart_columns (name1, name2, name3)
+        values (#{name1,jdbcType=VARCHAR}, #{name2,jdbcType=VARCHAR}, #{name3,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="github.haoqi123.boot.entity.TableMultipartColumns" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into qjwy_db01.table_multipart_columns
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name1 != null">
+                name1,
+            </if>
+            <if test="name2 != null">
+                name2,
+            </if>
+            <if test="name3 != null">
+                name3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name1 != null">
+                #{name1,jdbcType=VARCHAR},
+            </if>
+            <if test="name2 != null">
+                #{name2,jdbcType=VARCHAR},
+            </if>
+            <if test="name3 != null">
+                #{name3,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="github.haoqi123.boot.entity.TableMultipartColumns">
+        <!--@mbg.generated-->
+        update qjwy_db01.table_multipart_columns
+        <set>
+            <if test="name1 != null">
+                name1 = #{name1,jdbcType=VARCHAR},
+            </if>
+            <if test="name2 != null">
+                name2 = #{name2,jdbcType=VARCHAR},
+            </if>
+            <if test="name3 != null">
+                name3 = #{name3,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="github.haoqi123.boot.entity.TableMultipartColumns">
+        <!--@mbg.generated-->
+        update qjwy_db01.table_multipart_columns
+        set name1 = #{name1,jdbcType=VARCHAR},
+            name2 = #{name2,jdbcType=VARCHAR},
+            name3 = #{name3,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

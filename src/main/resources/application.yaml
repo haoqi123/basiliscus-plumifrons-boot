@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: basiliscus-plumifrons-boot
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://server01:13306/qjwy_db01
+    password: root123
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
