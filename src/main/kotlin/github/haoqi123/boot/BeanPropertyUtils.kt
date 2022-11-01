@@ -25,31 +25,34 @@ object BeanPropertyUtils {
         return hashSet.toArray(arrayOfNulls<String>(hashSet.size))
     }
 
-    fun getNotNonPropertyNames(any: Any): Array<String> {
+    fun getNotNonPropertyNames(any: Any): HashMap<String, FieldAndAnno> {
         val bean = BeanWrapperImpl(any)
         val propertyDescriptors: Array<PropertyDescriptor> = bean.propertyDescriptors
 
-        val hashSet = HashSet<String>()
+        val hashSet = HashMap<String, FieldAndAnno>()
         propertyDescriptors
             .filter { !it.name.equals("class") }
             .forEach {
-                if (Objects.nonNull(bean.getPropertyValue(it.name))) {
-                    hashSet.add(it.name)
+                val propertyValue = bean.getPropertyValue(it.name)
+                if (it.propertyType == java.lang.String::class.java) {
+                    if (Objects.nonNull(propertyValue) && "" != propertyValue) {
+                        hashSet[it.name] = FieldAndAnno(propertyValue!!, SelectionKeysEnum.EQ)
+                    }
+                } else if (Objects.nonNull(propertyValue)) {
+                    hashSet[it.name] = FieldAndAnno(propertyValue!!, SelectionKeysEnum.EQ)
                 }
             }
 
-        return hashSet.toArray(arrayOfNulls<String>(hashSet.size))
+        return hashSet
     }
 
-    fun getPropertyValue(any: Any, array: Array<String>): HashMap<String, FieldAndAnno>? {
-        val hashMap = HashMap<String, FieldAndAnno>()
+    fun getPropertyValue(any: Any, map: HashMap<String, FieldAndAnno>) {
+
         val kProperty1Map = any.javaClass.kotlin.memberProperties.associateBy { it.name }
-        array.forEach {
-            val kProperty1 = kProperty1Map[it]!!
+        map.forEach {
+            val kProperty1 = kProperty1Map[it.key]!!
             val annotations: SelectionKeys? = kProperty1.findAnnotation<SelectionKeys>()
-            println(annotations)
-            hashMap.put(it, FieldAndAnno(kProperty1.getter, annotations ?: SelectionKeys(SelectionKeysEnum.EQ)))
+            if (annotations != null) it.value.selectionKeysEnum = annotations.selectionKeys
         }
-        return null
     }
 }

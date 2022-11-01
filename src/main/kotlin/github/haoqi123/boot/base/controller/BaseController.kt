@@ -19,7 +19,7 @@ open class BaseController<E, V : Any, D, M : BaseMapper<E>>(protected val mapper
 //        BeanPropertyUtils.getNonPropertyNames(v).forEach { println(it) }
         BeanPropertyUtils.getNotNonPropertyNames(v).apply {
             BeanPropertyUtils.getPropertyValue(v,this)
-        }
+        }.forEach { println(it.value) }
 
 //        mapper.selectMaps(wrapper)
         return d
