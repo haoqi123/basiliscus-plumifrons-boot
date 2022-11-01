@@ -7,6 +7,7 @@ import github.haoqi123.boot.model.TableMultipartColumnsMapper
 import github.haoqi123.boot.vo.TableVo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RestController
+import kotlin.reflect.full.memberProperties
 
 @RestController
 class TableController(
@@ -21,6 +22,12 @@ class TableController(
         val tableVo = TableVo(name4 = "123", name5 = null)
         tableVo.name21 = "123"
         tableVo.name22 = "123"
-        selectList(tableVo, TableDto(""))
+
+        tableVo.javaClass.kotlin.memberProperties
+            .forEach { println(it.annotations) }
+//            .associateBy { it.name }
+//            .forEach { (t, u) -> println(u.annotations) }
+
+//        selectList(tableVo, TableDto(""))
     }
 }
