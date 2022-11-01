@@ -44,7 +44,7 @@ object BeanPropertyUtils {
         val kProperty1Map = any.javaClass.kotlin.memberProperties.associateBy { it.name }
         array.forEach {
             val kProperty1 = kProperty1Map[it]!!
-            val annotations = kProperty1.findAnnotation<SelectionKeys>()
+            val annotations: SelectionKeys? = kProperty1.findAnnotation<SelectionKeys>()
             println(annotations)
         }
         return null
