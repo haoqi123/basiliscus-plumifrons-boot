@@ -25,6 +25,10 @@ open class BaseController<E, V : Any, D, M : BaseMapper<E>>(protected val mapper
                 }
 
                 SelectionKeysEnum.LIKE -> {
+                    wrapper.like(it.key, it.value.fieldValue)
+                }
+
+                SelectionKeysEnum.RLIKE -> {
                     wrapper.like(it.key, "%" + it.value.fieldValue + "%")
                 }
 

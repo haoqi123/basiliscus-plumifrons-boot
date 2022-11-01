@@ -6,6 +6,7 @@ import github.haoqi123.boot.base.dto.FieldAndAnno
 import org.springframework.beans.BeanWrapperImpl
 import java.beans.PropertyDescriptor
 import java.util.*
+import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.memberProperties
 
@@ -47,11 +48,18 @@ object BeanPropertyUtils {
     }
 
     fun getPropertyValue(any: Any, map: HashMap<String, FieldAndAnno>) {
-        val kProperty1Map = any.javaClass.kotlin.memberProperties.associateBy { it.name }
+        var kProperty1Map: Map<String, Any> =
+            any.javaClass.kotlin.memberProperties.associateBy { it.name }
+
+        if (kProperty1Map.isEmpty()){
+            kProperty1Map = any::class.java.fields.associateBy { it.name }
+        }
         map.forEach {
             val kProperty1 = kProperty1Map[it.key]!!
-            val annotations: SelectionKeys? = kProperty1.findAnnotation<SelectionKeys>()
-            if (annotations != null) it.value.selectionKeysEnum = annotations.selectionKeys
+            if (kProperty1 is KMutableProperty1<*, *>) {
+                val annotations: SelectionKeys? = kProperty1.findAnnotation<SelectionKeys>()
+                if (annotations != null) it.value.selectionKeysEnum = annotations.value
+            }
         }
     }
 }
