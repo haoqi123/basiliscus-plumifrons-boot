@@ -1,9 +1,7 @@
 package github.haoqi123.boot.base.controller
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.baomidou.mybatisplus.core.mapper.BaseMapper
-import github.haoqi123.boot.BeanPropertyUtils
-import github.haoqi123.boot.annos.SelectionKeysEnum
+import github.haoqi123.boot.helps.WrapperUtils
 
 /**
  * E entity
@@ -11,34 +9,13 @@ import github.haoqi123.boot.annos.SelectionKeysEnum
  * D dto
  * M mapper
  */
-open class BaseController<E, V : Any, D, M : BaseMapper<E>>(protected val mapper: M) {
+open class BaseController<E, M : BaseMapper<E>>(protected val mapper: M) {
 
 
-    protected fun selectList(v: V, d: D): D {
-        val wrapper = QueryWrapper<E>()
-        BeanPropertyUtils.getNotNonPropertyNames(v).apply {
-            BeanPropertyUtils.getPropertyValue(v, this)
-        }.forEach {
-            when (it.value.selectionKeysEnum) {
-                SelectionKeysEnum.EQ -> {
-                    wrapper.eq(it.key, it.value.fieldValue)
-                }
-
-                SelectionKeysEnum.LIKE -> {
-                    wrapper.like(it.key, it.value.fieldValue)
-                }
-
-                SelectionKeysEnum.RLIKE -> {
-                    wrapper.like(it.key, "%" + it.value.fieldValue + "%")
-                }
-
-                SelectionKeysEnum.IN -> {
-                    wrapper.`in`(it.key, it.value.fieldValue)
-                }
-            }
-        }
-
-        mapper.selectMaps(wrapper).forEach { println(it) }
-        return d
+    protected fun <V : Any, D> selectList(v: V, d: D): MutableList<D> {
+        val listOf = mutableListOf(d)
+        mapper.selectMaps(WrapperUtils.generateWrapper(v))
+        //TODO 将查询出来的值转换给 D
+        return listOf
     }
 }
