@@ -5,10 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+//@Data
+//@Builder
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class TableMultipartColumns {
     private Integer id;
 

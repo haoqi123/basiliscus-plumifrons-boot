@@ -1,5 +1,5 @@
 package github.haoqi123.boot.base.dto
 
-import java.lang.reflect.Field
+import github.haoqi123.boot.annos.SelectionKeys
 
-data class FieldAndAnno(var field: Field)
+data class FieldAndAnno(var value: Any, val keys: SelectionKeys)

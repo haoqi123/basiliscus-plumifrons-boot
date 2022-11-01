@@ -1,6 +1,7 @@
 package github.haoqi123.boot
 
 import github.haoqi123.boot.annos.SelectionKeys
+import github.haoqi123.boot.annos.SelectionKeysEnum
 import github.haoqi123.boot.base.dto.FieldAndAnno
 import org.springframework.beans.BeanWrapperImpl
 import java.beans.PropertyDescriptor
@@ -40,12 +41,14 @@ object BeanPropertyUtils {
         return hashSet.toArray(arrayOfNulls<String>(hashSet.size))
     }
 
-    fun getPropertyValue(any: Any, array: Array<String>): Array<FieldAndAnno>? {
+    fun getPropertyValue(any: Any, array: Array<String>): HashMap<String, FieldAndAnno>? {
+        val hashMap = HashMap<String, FieldAndAnno>()
         val kProperty1Map = any.javaClass.kotlin.memberProperties.associateBy { it.name }
         array.forEach {
             val kProperty1 = kProperty1Map[it]!!
             val annotations: SelectionKeys? = kProperty1.findAnnotation<SelectionKeys>()
             println(annotations)
+            hashMap.put(it, FieldAndAnno(kProperty1.getter, annotations ?: SelectionKeys(SelectionKeysEnum.EQ)))
         }
         return null
     }
