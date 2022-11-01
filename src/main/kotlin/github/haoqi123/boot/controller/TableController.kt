@@ -5,15 +5,11 @@ import github.haoqi123.boot.dto.TableDto
 import github.haoqi123.boot.dto.TableDtoV1
 import github.haoqi123.boot.entity.TableMultipartColumns
 import github.haoqi123.boot.model.TableMultipartColumnsMapper
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class TableController(
-    @Autowired
-    mapper: TableMultipartColumnsMapper
-) :
-    BaseController<TableMultipartColumns, TableMultipartColumnsMapper>(mapper) {
+class TableController :
+    BaseController<TableMultipartColumns, TableMultipartColumnsMapper>() {
 
     fun test() {
 //            QueryWrapper<TableMultipartColumns>()
