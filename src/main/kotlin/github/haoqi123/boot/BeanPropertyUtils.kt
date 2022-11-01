@@ -47,7 +47,6 @@ object BeanPropertyUtils {
     }
 
     fun getPropertyValue(any: Any, map: HashMap<String, FieldAndAnno>) {
-
         val kProperty1Map = any.javaClass.kotlin.memberProperties.associateBy { it.name }
         map.forEach {
             val kProperty1 = kProperty1Map[it.key]!!

@@ -5,5 +5,5 @@ annotation class SelectionKeys(val selectionKeys: SelectionKeysEnum)
 
 
 enum class SelectionKeysEnum {
-    EQ, IN, LIKE, RLIKE
+    EQ, IN, LIKE
 }

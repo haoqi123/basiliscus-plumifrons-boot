@@ -1,13 +1,22 @@
 package github.haoqi123.boot.vo
 
+import github.haoqi123.boot.TableMultipartColumnsKt
 import github.haoqi123.boot.annos.SelectionKeys
 import github.haoqi123.boot.annos.SelectionKeysEnum
 
-class TableVo : TableV2Vo() {
+class TableVo : TableMultipartColumnsKt() {
 
     @SelectionKeys(SelectionKeysEnum.EQ)
-    var name4: String = ""
+    override var name1: String?
+        get() = super.name1
+        set(value) {
+            super.name1 = value
+        }
 
     @SelectionKeys(SelectionKeysEnum.LIKE)
-    var name5: String? = null
+    override var name2: String?
+        get() = super.name2
+        set(value) {
+            super.name2 = value
+        }
 }

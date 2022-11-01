@@ -19,10 +19,7 @@ class TableController(
 //            QueryWrapper<TableMultipartColumns>()
 //            mapper.selectByPrimaryKey(1)
         val tableVo = TableVo()
-        tableVo.name4 = "4"
-        tableVo.name5 = "5"
-        tableVo.name21 = "21"
-        tableVo.name22 = "22"
+        tableVo.name1="1"
         selectList(tableVo, TableDto())
     }
 }
