@@ -17,7 +17,9 @@ open class BaseController<E, V : Any, D, M : BaseMapper<E>>(protected val mapper
         var wrapper = QueryWrapper<E>()
 //        BeanUtils.copyProperties()
 //        BeanPropertyUtils.getNonPropertyNames(v).forEach { println(it) }
-        BeanPropertyUtils.getNotNonPropertyNames(v).forEach { println(it) }
+        BeanPropertyUtils.getNotNonPropertyNames(v).apply {
+            BeanPropertyUtils.getPropertyValue(v,this)
+        }
 
 //        mapper.selectMaps(wrapper)
         return d

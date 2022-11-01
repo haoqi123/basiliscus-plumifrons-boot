@@ -1,9 +1,12 @@
 package github.haoqi123.boot
 
+import github.haoqi123.boot.annos.SelectionKeys
+import github.haoqi123.boot.base.dto.FieldAndAnno
 import org.springframework.beans.BeanWrapperImpl
 import java.beans.PropertyDescriptor
-import java.lang.reflect.Field
 import java.util.*
+import kotlin.reflect.full.findAnnotation
+import kotlin.reflect.full.memberProperties
 
 object BeanPropertyUtils {
 
@@ -24,15 +27,26 @@ object BeanPropertyUtils {
     fun getNotNonPropertyNames(any: Any): Array<String> {
         val bean = BeanWrapperImpl(any)
         val propertyDescriptors: Array<PropertyDescriptor> = bean.propertyDescriptors
-        val hashSet = HashSet<String>()
 
-        val fields: Array<Field> = any.javaClass.fields
-        propertyDescriptors.forEach {
-            if (Objects.nonNull(bean.getPropertyValue(it.name))) {
-                hashSet.add(it.name)
+        val hashSet = HashSet<String>()
+        propertyDescriptors
+            .filter { !it.name.equals("class") }
+            .forEach {
+                if (Objects.nonNull(bean.getPropertyValue(it.name))) {
+                    hashSet.add(it.name)
+                }
             }
-        }
 
         return hashSet.toArray(arrayOfNulls<String>(hashSet.size))
+    }
+
+    fun getPropertyValue(any: Any, array: Array<String>): Array<FieldAndAnno>? {
+        val kProperty1Map = any.javaClass.kotlin.memberProperties.associateBy { it.name }
+        array.forEach {
+            val kProperty1 = kProperty1Map[it]!!
+            val annotations = kProperty1.findAnnotation<SelectionKeys>()
+            println(annotations)
+        }
+        return null
     }
 }
