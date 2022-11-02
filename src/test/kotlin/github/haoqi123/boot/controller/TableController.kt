@@ -17,7 +17,10 @@ class TableController :
         val tableVo = TableVo()
 //        tableVo.name1 = "1"
         tableVo.name2 = "3"
-        selectList(tableVo, TableDto()).forEach { println("${it.name01}") }
+        selectList(tableVo, TableDto::class.java)
+            .forEach {
+                println(it.name1)
+            }
 
     }
 }

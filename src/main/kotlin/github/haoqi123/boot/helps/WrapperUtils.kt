@@ -6,9 +6,9 @@ import github.haoqi123.boot.annos.SelectionKeysEnum
 import org.springframework.beans.BeanWrapper
 import org.springframework.beans.BeanWrapperImpl
 
-object  WrapperUtils {
+object WrapperUtils {
 
-   fun <E, V : Any> generateWrapper(v: V): QueryWrapper<E> {
+    fun <E, V : Any, D : Any> generateWrapper(v: V, d: D): QueryWrapper<E> {
         val wrapper: QueryWrapper<E> = QueryWrapper<E>()
         val bean: BeanWrapper = BeanWrapperImpl(v)
         BeanPropertyUtils.getNotNonPropertyNames(bean).apply {
@@ -32,6 +32,7 @@ object  WrapperUtils {
                 }
             }
         }
+        wrapper.select(BeanPropertyUtils.getPropertyNames(BeanWrapperImpl(d)))
         return wrapper
     }
 }
