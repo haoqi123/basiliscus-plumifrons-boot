@@ -23,8 +23,9 @@ repositories {
 }
 
 dependencies {
-    runtimeOnly("com.mysql:mysql-connector-j")
 
+    testImplementation("org.flywaydb:flyway-core:9.6.0")
+    testImplementation("com.h2database:h2:2.1.214")
     testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 

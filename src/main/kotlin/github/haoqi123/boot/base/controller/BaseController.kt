@@ -19,7 +19,7 @@ open class BaseController<E, M : BaseMapper<E>>(
 
     protected fun <V : Any, D> selectList(v: V, d: D): MutableList<D> {
         val listOf = mutableListOf(d)
-        mapper.selectMaps(WrapperUtils.generateWrapper(v))
+        mapper.selectMaps(WrapperUtils.generateWrapper(v)).forEach { println(it) }
         //TODO 将查询出来的值转换给 D
         return listOf
     }

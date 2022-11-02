@@ -1,5 +1,8 @@
 package github.haoqi123.boot.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
+@TableName(value = "TABLE_MULTIPART_COLUMNS",schema = "h2_data")
 public class TableMultipartColumns {
     private Integer id;
 
