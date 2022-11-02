@@ -50,19 +50,14 @@ object BeanPropertyUtils {
                     .filter { it1 ->
                         it1.annotationClass == SelectionKeys::class
                     }
-                    .forEach { it2 ->
+                    .forEach { _ ->
                         val annotation = bean.wrappedClass.getDeclaredMethod(it.readMethod.name)
                             .getAnnotation(SelectionKeys::class.java)
                         map[it.name]!!.selectionKeysEnum = annotation.value
                     }
-
             }
-//        val kProperty1Map: Map<String, Any> = mapOf()
-        /*any.javaClass.kotlin.memberProperties.associateBy { it.name }
 
-    if (kProperty1Map.isEmpty()) {
-        kProperty1Map = any::class.java.fields.associateBy { it.name }
-    }*/
+        /*any.javaClass.kotlin.memberProperties.associateBy { it.name }*/
         /*map.forEach {
             val kProperty1 = kProperty1Map[it.key]!!
             if (kProperty1 is KMutableProperty1<*, *>) {

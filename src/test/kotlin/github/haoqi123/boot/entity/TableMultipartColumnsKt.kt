@@ -1,4 +1,4 @@
-package github.haoqi123.boot
+package github.haoqi123.boot.entity
 
 open class TableMultipartColumnsKt {
     val id: Int? = null
