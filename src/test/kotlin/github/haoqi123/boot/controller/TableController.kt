@@ -5,9 +5,9 @@ import github.haoqi123.boot.dto.TableDto
 import github.haoqi123.boot.entity.TableMultipartColumns
 import github.haoqi123.boot.model.TableMultipartColumnsMapper
 import github.haoqi123.boot.vo.TableVo
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.stereotype.Component
 
-@RestController
+@Component
 class TableController :
     BaseController<TableMultipartColumns, TableMultipartColumnsMapper>() {
 
