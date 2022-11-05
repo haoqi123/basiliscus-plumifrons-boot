@@ -9,4 +9,9 @@ open class TableV2Vo {
 
     @SelectionKeys(SelectionKeysEnum.LIKE)
     var name22: String? = null
+    override fun toString(): String {
+        return "TableV2Vo(name21=$name21, name22=$name22)"
+    }
+
+
 }

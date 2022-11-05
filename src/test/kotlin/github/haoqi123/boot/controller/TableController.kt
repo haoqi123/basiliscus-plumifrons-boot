@@ -1,5 +1,6 @@
 package github.haoqi123.boot.controller
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page
 import github.haoqi123.boot.base.controller.BaseController
 import github.haoqi123.boot.dto.TableDto
 import github.haoqi123.boot.entity.TableMultipartColumns
@@ -11,16 +12,15 @@ import org.springframework.stereotype.Component
 class TableController :
     BaseController<TableMultipartColumns, TableMultipartColumnsMapper>() {
 
-    fun test() {
-//            QueryWrapper<TableMultipartColumns>()
-//            mapper.selectByPrimaryKey(1)
-        val tableVo = TableVo()
-//        tableVo.name1 = "1"
-        tableVo.name2 = "3"
-        selectList(tableVo, TableDto::class.java)
-            .forEach {
-                println(it.name1)
-            }
+    fun selectListVDTest(v: TableVo): List<TableDto> {
+        return selectList(v, TableDto::class.java)
+    }
 
+    fun selectListVTest(v: TableVo): List<TableMultipartColumns> {
+        return selectList(v)
+    }
+
+    fun selectPageTest(v: TableVo, page: Page<TableMultipartColumns>): Page<TableMultipartColumns> {
+        return selectPage(v, page)
     }
 }

@@ -19,4 +19,10 @@ class TableVo : TableMultipartColumnsKt() {
         set(value) {
             super.name2 = value
         }
+
+    override fun toString(): String {
+        return "TableVo(name1=$name1, name2=$name2) ${super.toString()}"
+    }
+
+
 }

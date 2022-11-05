@@ -43,4 +43,14 @@ public class TableMultipartColumns {
     public void setName3(String name3) {
         this.name3 = name3;
     }
+
+    @Override
+    public String toString() {
+        return "TableMultipartColumns{" +
+                "id=" + id +
+                ", name1='" + name1 + '\'' +
+                ", name2='" + name2 + '\'' +
+                ", name3='" + name3 + '\'' +
+                '}';
+    }
 }
