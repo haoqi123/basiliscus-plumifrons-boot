@@ -10,6 +10,11 @@ import java.util.*
 
 object BeanPropertyUtils {
 
+    @JvmStatic
+    fun main(args: Array<String>) {
+
+    }
+
     fun getPropertyNames(bean: BeanWrapper): String {
         return bean.propertyDescriptors
             .filter { !it.name.equals("class") }

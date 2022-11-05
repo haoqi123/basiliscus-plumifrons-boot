@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "github.haoqi123"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1-bate"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 //configurations {
