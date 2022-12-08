@@ -28,9 +28,7 @@ publishing {
 }
 
 tasks.jar{
-    if (archiveClassifier.isPresent){
-        archiveClassifier.set("")
-    }
+    archiveClassifier.set("")
 }
 
 
