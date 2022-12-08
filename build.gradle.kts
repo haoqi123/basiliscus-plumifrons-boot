@@ -5,10 +5,36 @@ plugins {
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     kotlin("jvm") version "1.7.20"
     kotlin("plugin.spring") version "1.7.20"
+    `java-library`
+    `maven-publish`
 }
 
+
+java {
+    //withJavadocJar()
+    withSourcesJar()
+}
+
+
+publishing {
+    publications {
+        create<MavenPublication>("haoQi") {
+            groupId = "github.haoqi123"
+            artifactId = "basiliscus-plumifronts-boot"
+            version = "0.0.1.beta"
+            from(components["java"])
+        }
+    }
+}
+
+tasks.jar{
+    setClassifier("")
+}
+
+
+
 group = "github.haoqi123"
-version = "0.0.1-bata"
+version = "0.0.1-beta"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 //configurations {
@@ -18,8 +44,8 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 //}
 
 repositories {
-    maven(url = "https://maven.aliyun.com/repository/public")
     mavenLocal()
+    maven(url = "https://maven.aliyun.com/repository/public")
     mavenCentral()
 }
 
