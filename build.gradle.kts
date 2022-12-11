@@ -20,7 +20,7 @@ publishing {
     publications {
         create<MavenPublication>("haoQi") {
             groupId = "github.haoqi123"
-            artifactId = "basiliscus-plumifronts-boot"
+            artifactId = "basiliscus-plumifrons-boot"
             version = "0.0.1.beta"
             from(components["java"])
         }
