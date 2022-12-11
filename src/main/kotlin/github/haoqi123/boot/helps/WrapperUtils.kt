@@ -6,9 +6,6 @@ import github.haoqi123.boot.annos.SelectionKeysEnum
 import github.haoqi123.boot.base.dto.FieldAndAnno
 import org.springframework.beans.BeanWrapper
 import org.springframework.beans.BeanWrapperImpl
-import java.util.*
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 object WrapperUtils {
 
@@ -30,7 +27,7 @@ object WrapperUtils {
     private fun <E> wrapper(map: Map<String, FieldAndAnno>): QueryWrapper<E> {
         val wrapper: QueryWrapper<E> = QueryWrapper<E>()
         map.forEach {
-            val name = humpToUnderline(it.key)
+            val name = com.baomidou.mybatisplus.core.toolkit.StringUtils.camelToUnderline(it.key)
             when (it.value.selectionKeysEnum) {
                 SelectionKeysEnum.EQ -> {
                     wrapper.eq(name, it.value.fieldValue)
@@ -50,16 +47,5 @@ object WrapperUtils {
             }
         }
         return wrapper
-    }
-
-    private val compile: Pattern = Pattern.compile("[A-Z]")
-    private fun humpToUnderline(str: String): String {
-        val matcher: Matcher = compile.matcher(str)
-        val sb = StringBuffer()
-        while (matcher.find()) {
-            matcher.appendReplacement(sb, "_" + matcher.group(0).lowercase(Locale.getDefault()))
-        }
-        matcher.appendTail(sb)
-        return sb.toString()
     }
 }
