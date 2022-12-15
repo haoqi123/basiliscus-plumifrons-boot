@@ -9,39 +9,9 @@ plugins {
     `maven-publish`
 }
 
-
-java {
-    //withJavadocJar()
-    withSourcesJar()
-}
-
-
-publishing {
-    publications {
-        create<MavenPublication>("haoQi") {
-            groupId = "github.haoqi123"
-            artifactId = "basiliscus-plumifrons-boot"
-            version = "0.0.1.beta"
-            from(components["java"])
-        }
-    }
-}
-
-tasks.jar{
-    archiveClassifier.set("")
-}
-
-
-
 group = "github.haoqi123"
 version = "0.0.1-beta"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
-
-//configurations {
-//    compileOnly {
-//        extendsFrom(configurations.annotationProcessor.get())
-//    }
-//}
 
 repositories {
     mavenLocal()
@@ -55,10 +25,11 @@ dependencies {
     testImplementation("com.h2database:h2:2.1.214")
     testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("com.baomidou:mybatis-plus-boot-starter:3.5.2")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("com.baomidou:mybatis-plus-boot-starter:3.5.2")
+    compileOnly("com.baomidou:mybatis-plus-boot-starter:3.5.2")
 }
 
 tasks.withType<KotlinCompile> {
@@ -71,3 +42,39 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+java {
+    //withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("haoQi") {
+            groupId = "github.haoqi123"
+            artifactId = "basiliscus-plumifrons-boot"
+            version = "0.0.1.beta"
+            from(components["java"])
+        }
+    }
+}
+
+tasks.jar {
+    archiveClassifier.set("")
+}
+
+
+//sourceSets {
+//    main {
+////        java {
+////             忽略所有的 src/main/java/test目录
+////            exclude("com/baomidou/**")
+////        }
+//        resources {
+//            // 打包忽略目录: src/main/resources/img
+//            exclude("com/baomidou/**")
+//            // 打包忽略文件: src/main/resources/icons/scanner.vsdx
+////            exclude 'icons/scanner.vsdx'
+//        }
+//    }
+//}
