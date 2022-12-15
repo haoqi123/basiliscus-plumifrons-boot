@@ -5,10 +5,17 @@ import github.haoqi123.boot.annos.SelectionKeysEnum
 import github.haoqi123.boot.base.dto.FieldAndAnno
 import org.springframework.beans.BeanWrapper
 import org.springframework.beans.BeanWrapperImpl
-import java.beans.PropertyDescriptor
+import java.lang.reflect.Field
 import java.util.*
+import kotlin.collections.HashMap
 
 object BeanPropertyUtils {
+
+
+    /**
+     * 字段中没有找到匹配的注解
+     */
+    private val fieldNotMatchAnnotation: MutableMap<String, Field> = HashMap()
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -43,28 +50,49 @@ object BeanPropertyUtils {
     }
 
     fun getPropertyValue(bean: BeanWrapper, map: Map<String, FieldAndAnno>) {
-        val propertyDescriptors: Array<PropertyDescriptor> = bean.propertyDescriptors
-        propertyDescriptors
-            .filter { map.containsKey(it.name) }
-            .forEach {
-                it.readMethod.annotations
-                    .filter { it1 ->
-                        it1.annotationClass == SelectionKeys::class
-                    }
-                    .forEach { _ ->
-                        val annotation = bean.wrappedClass.getDeclaredMethod(it.readMethod.name)
-                            .getAnnotation(SelectionKeys::class.java)
-                        map[it.name]!!.selectionKeysEnum = annotation.value
-                    }
-            }
+        // 获取字段上的注解值
+        obtainFiledMetaAnnotationValue(bean, map)
+        // 获取Getter 方法上的注解值
+        obtainGetterMetaAnnotationValue(bean, map)
 
-        /*any.javaClass.kotlin.memberProperties.associateBy { it.name }*/
-        /*map.forEach {
-            val kProperty1 = kProperty1Map[it.key]!!
-            if (kProperty1 is KMutableProperty1<*, *>) {
-                val annotations: SelectionKeys? = kProperty1.findAnnotation<SelectionKeys>()
-                if (annotations != null) it.value.selectionKeysEnum = annotations.value
-            }
-        }*/
     }
+
+
+    /**
+     * 获取字段的元数据注解值
+     */
+    private fun obtainFiledMetaAnnotationValue(
+        bean: BeanWrapper,
+        map: Map<String, FieldAndAnno>
+    ): Map<String, FieldAndAnno> {
+        for (field in bean.wrappedClass.fields) {
+            if (map.containsKey(field.name)) {
+                field.getAnnotation(SelectionKeys::class.java)?.let {
+                    map[field.name]?.selectionKeysEnum = field.getAnnotation(SelectionKeys::class.java).value;
+                } ?: run {
+                    fieldNotMatchAnnotation.put(field.name, field)
+                }
+            }
+        }
+        return map;
+    }
+
+    /**
+     * 获取 readMethod 上的 SelectKeys 注解
+     */
+    private fun obtainGetterMetaAnnotationValue(
+        bean: BeanWrapper,
+        map: Map<String, FieldAndAnno>
+    ): Map<String, FieldAndAnno> {
+        if (fieldNotMatchAnnotation.isNotEmpty()){
+            val propertyDescriptors = bean.propertyDescriptors
+            propertyDescriptors.filter { map.containsKey(it.name) }
+                .filter { fieldNotMatchAnnotation.contains(it.name) }
+                .forEach {
+                    map[it.name]?.selectionKeysEnum= it.readMethod.getAnnotation(SelectionKeys::class.java).value
+                }
+        }
+        return map;
+    }
+
 }
