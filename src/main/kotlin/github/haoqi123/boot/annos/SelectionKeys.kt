@@ -13,5 +13,5 @@ annotation class SelectionKeys(val value: SelectionKeysEnum)
 
 
 enum class SelectionKeysEnum {
-    EQ, IN, LIKE, RLIKE
+    EQ, IN, LIKE, LEFT_LIKE, RIGHT_LIKE
 }

@@ -20,7 +20,7 @@ class BasiliscusPlumifronsBootApplicationTests {
     @Autowired
     lateinit var tableController: TableController
 
-    val objectMapper:ObjectMapper= ObjectMapper()
+    val objectMapper: ObjectMapper = ObjectMapper()
 
     @Test
     fun selectListVDTest() {
@@ -34,6 +34,13 @@ class BasiliscusPlumifronsBootApplicationTests {
         assert(tableController.selectListVTest(TableVo().apply { this.name2 = "4" })
             .apply { println(objectMapper.writeValueAsString(this)) }
             .isNotEmpty())
+    }
+
+    @Test
+    fun selectListVTestIsEmpty() {
+        assert(tableController.selectListVTest(TableVo().apply { this.name2 = "xxxx" })
+            .apply { println(objectMapper.writeValueAsString(this)) }
+            .isEmpty())
     }
 
     @Test

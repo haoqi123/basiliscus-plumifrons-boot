@@ -37,8 +37,12 @@ object WrapperUtils {
                     wrapper.like(name, it.value.fieldValue)
                 }
 
-                SelectionKeysEnum.RLIKE -> {
-                    wrapper.like(name, "%" + it.value.fieldValue + "%")
+                SelectionKeysEnum.LEFT_LIKE -> {
+                    wrapper.likeLeft(name, it.value.fieldValue)
+                }
+
+                SelectionKeysEnum.RIGHT_LIKE -> {
+                    wrapper.likeRight(name, it.value.fieldValue)
                 }
 
                 SelectionKeysEnum.IN -> {

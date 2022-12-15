@@ -8,13 +8,13 @@ open class TableVo : TableMultipartColumnsKt() {
 
     //@SelectionKeys(SelectionKeysEnum.EQ)
     override var name1: String?
-        @SelectionKeys(SelectionKeysEnum.LIKE)
+        @SelectionKeys(SelectionKeysEnum.LEFT_LIKE)
         get() = super.name1
         set(value) {
             super.name1 = value
         }
 
-    @SelectionKeys(SelectionKeysEnum.LIKE)
+    @SelectionKeys(SelectionKeysEnum.RIGHT_LIKE)
     override var name2: String? = null
 
 
