@@ -31,7 +31,7 @@ class BasiliscusPlumifronsBootApplicationTests {
 
     @Test
     fun selectListVTest() {
-        assert(tableController.selectListVTest(TableVo().apply { this.name2 = "2" })
+        assert(tableController.selectListVTest(TableVo().apply { this.name2 = "4" })
             .apply { println(objectMapper.writeValueAsString(this)) }
             .isNotEmpty())
     }
@@ -39,7 +39,7 @@ class BasiliscusPlumifronsBootApplicationTests {
     @Test
     fun selectPageTest() {
         assert(
-            tableController.selectPageTest(TableVo().apply { this.name2 = "2" }, Page.of(0, 1))
+            tableController.selectPageTest(TableVo().apply { this.name2 = "5" }, Page.of(0, 1))
                 .apply { println(objectMapper.writeValueAsString(this)) }
                 .records.isNotEmpty()
         )

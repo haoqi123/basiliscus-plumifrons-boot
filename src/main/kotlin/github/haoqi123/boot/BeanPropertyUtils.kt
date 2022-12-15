@@ -8,6 +8,11 @@ import org.springframework.beans.BeanWrapperImpl
 import java.lang.reflect.Field
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.reflect.KProperty1
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.isAccessible
+import kotlin.reflect.jvm.javaField
 
 object BeanPropertyUtils {
 
@@ -15,7 +20,7 @@ object BeanPropertyUtils {
     /**
      * 字段中没有找到匹配的注解
      */
-    private val fieldNotMatchAnnotation: MutableMap<String, Field> = HashMap()
+    private val fieldNotMatchAnnotation: MutableMap<String, KProperty1<out Any, *>> = HashMap()
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -65,12 +70,12 @@ object BeanPropertyUtils {
         bean: BeanWrapper,
         map: Map<String, FieldAndAnno>
     ): Map<String, FieldAndAnno> {
-        for (field in bean.wrappedClass.fields) {
+        for (field in bean.wrappedClass.kotlin.declaredMemberProperties) {
             if (map.containsKey(field.name)) {
-                field.getAnnotation(SelectionKeys::class.java)?.let {
-                    map[field.name]?.selectionKeysEnum = field.getAnnotation(SelectionKeys::class.java).value;
-                } ?: run {
-                    fieldNotMatchAnnotation.put(field.name, field)
+                field.annotations.forEach {
+                    if (it is SelectionKeys) {
+                        map[field.name]?.selectionKeysEnum = it.value;
+                    }
                 }
             }
         }
@@ -84,14 +89,14 @@ object BeanPropertyUtils {
         bean: BeanWrapper,
         map: Map<String, FieldAndAnno>
     ): Map<String, FieldAndAnno> {
-        if (fieldNotMatchAnnotation.isNotEmpty()){
+        //if (fieldNotMatchAnnotation.isNotEmpty()){
             val propertyDescriptors = bean.propertyDescriptors
             propertyDescriptors.filter { map.containsKey(it.name) }
-                .filter { fieldNotMatchAnnotation.contains(it.name) }
+                //.filter { fieldNotMatchAnnotation.contains(it.name) }
                 .forEach {
                     map[it.name]?.selectionKeysEnum= it.readMethod.getAnnotation(SelectionKeys::class.java).value
                 }
-        }
+        //}
         return map;
     }
 
