@@ -5,14 +5,9 @@ import github.haoqi123.boot.annos.SelectionKeysEnum
 import github.haoqi123.boot.base.dto.FieldAndAnno
 import org.springframework.beans.BeanWrapper
 import org.springframework.beans.BeanWrapperImpl
-import java.lang.reflect.Field
 import java.util.*
-import kotlin.collections.HashMap
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.declaredMemberProperties
-import kotlin.reflect.full.memberProperties
-import kotlin.reflect.jvm.isAccessible
-import kotlin.reflect.jvm.javaField
 
 object BeanPropertyUtils {
 
@@ -89,14 +84,13 @@ object BeanPropertyUtils {
         bean: BeanWrapper,
         map: Map<String, FieldAndAnno>
     ): Map<String, FieldAndAnno> {
-        //if (fieldNotMatchAnnotation.isNotEmpty()){
-            val propertyDescriptors = bean.propertyDescriptors
-            propertyDescriptors.filter { map.containsKey(it.name) }
-                //.filter { fieldNotMatchAnnotation.contains(it.name) }
-                .forEach {
-                    map[it.name]?.selectionKeysEnum= it.readMethod.getAnnotation(SelectionKeys::class.java).value
-                }
-        //}
+        val propertyDescriptors = bean.propertyDescriptors
+        propertyDescriptors
+            .filter { map.containsKey(it.name) && it.readMethod.getAnnotation(SelectionKeys::class.java) != null }
+            .forEach {
+                val annotation = it.readMethod.getAnnotation(SelectionKeys::class.java)
+                map[it.name]?.selectionKeysEnum = annotation.value
+            }
         return map;
     }
 
