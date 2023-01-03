@@ -5,7 +5,6 @@ plugins {
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     kotlin("jvm") version "1.7.20"
     kotlin("plugin.spring") version "1.7.20"
-    `java-library`
     `maven-publish`
 }
 
@@ -51,9 +50,9 @@ java {
 publishing {
     publications {
         create<MavenPublication>("haoQi") {
-            groupId = "github.haoqi123"
-            artifactId = "basiliscus-plumifrons-boot"
-            version = "0.0.1.beta"
+            groupId = "${project.group}"
+            artifactId = project.name
+            version = "${project.version}"
             from(components["java"])
         }
     }
